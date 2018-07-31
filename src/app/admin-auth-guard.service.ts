@@ -10,10 +10,10 @@ import { switchMap, map } from 'rxjs/operators';
 })
 export class AdminAuthGuard implements CanActivate {
 
-  constructor(private userService: UserService, private auth: AuthService) { }
+  constructor(private auth: AuthService) { }
 
   canActivate(): Observable<boolean>{
-    return this.auth.user$.pipe(switchMap(user => this.userService.get(user.uid)))
+    return this.auth.appUser$
       .pipe(map(appUser => appUser.isAdmin));    
   }
 }
