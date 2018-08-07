@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-product-form',
@@ -20,5 +21,12 @@ export class ProductFormComponent implements OnInit {
 
   ngOnInit() {
   }
+
+  productForm = new FormGroup({
+    title: new FormControl('', Validators.required),
+    price: new FormControl('', Validators.required),
+    category: new FormControl('', Validators.required),
+    imageUrl: new FormControl('', Validators.required),
+  });
 
 }
