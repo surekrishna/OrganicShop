@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { ProductService } from '../../product.service';
 
 @Component({
   selector: 'app-product-form',
@@ -17,16 +18,20 @@ export class ProductFormComponent implements OnInit {
     {catName: 'vegitables', catValue: 'Vegitables'},
   ];
 
-  constructor() { }
-
-  ngOnInit() {
-  }
-
   productForm = new FormGroup({
     title: new FormControl('', Validators.required),
     price: new FormControl('', Validators.required),
     category: new FormControl('', Validators.required),
     imageUrl: new FormControl('', Validators.required),
   });
+
+  constructor(private productService: ProductService) { }
+
+  saveProduct(product){
+    this.productService.createProduct(product);
+  }
+
+  ngOnInit() {
+  }
 
 }
