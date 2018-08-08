@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ProductService } from '../../product.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-product-form',
@@ -25,10 +26,11 @@ export class ProductFormComponent implements OnInit {
     imageUrl: new FormControl('', Validators.required),
   });
 
-  constructor(private productService: ProductService) { }
+  constructor(private productService: ProductService, private router: Router) { }
 
   saveProduct(product){
     this.productService.createProduct(product);
+    this.router.navigate(['/admin/products']);
   }
 
   ngOnInit() {
