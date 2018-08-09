@@ -25,7 +25,7 @@
           <label for="category">Category</label>
           <select formControlName="category" id="category" class="form-control">  
             <option value=""></option>      
-            <option *ngFor="let category of categories" [value]="category.catName">{{category.catValue}}</option>
+            <option *ngFor="let category of categoryList" [value]="category.key">{{category.name}}</option>
           </select>
           <div class="alert alert-danger" *ngIf="productForm.get('category').touched && productForm.get('category').invalid">
               Category is required.
@@ -44,7 +44,7 @@
   </div>
   <div class="col-md-5">
     <div class="card" style="width: 19rem;">
-        <img class="card-img-top" [src]="imageUrl">        
+        <img class="card-img-top" [src]="imageUrl" *ngIf="imageUrl">        
         <div class="card-body">
           <h5 class="card-title">{{ title }}</h5>
           <p class="card-text">{{ price | currency: 'USD': true }}</p>                           
