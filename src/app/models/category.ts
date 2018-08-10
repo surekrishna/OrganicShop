@@ -1,4 +1,4 @@
-export class Category {
+export interface Category {
     key: string;
     name: string;
 }
