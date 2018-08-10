@@ -70,4 +70,11 @@ export class ProductFormComponent {
     return this.product;  
   }
 
+  deleteProduct(){
+    if(!confirm('Are you sure you want to delete this Product?')) return;
+
+    this.productService.deleteProduct(this.$key);
+    this.router.navigate(['/admin/products']);
+  }
+
 }

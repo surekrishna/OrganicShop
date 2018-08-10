@@ -39,7 +39,8 @@
                 <div *ngIf="productForm.get('imageUrl').errors.url">Please enter a valid URL.</div>
             </div>
         </div> 
-        <button class="btn btn-primary" [disabled]="productForm.invalid">Save</button>
+        <button class="btn btn-primary" [disabled]="productForm.invalid">Save</button>&nbsp;&nbsp;
+        <button type="button" (click)="deleteProduct()" class="btn btn-danger">Delete</button>
       </form>
   </div>
   <div class="col-md-5">
