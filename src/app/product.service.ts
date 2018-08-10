@@ -25,4 +25,8 @@ export class ProductService {
     return this.db.object('/products/' + $key);        
   }
 
+  updateProduct($key, product){
+    return this.db.object('/products/' + $key).update(product);
+  }
+
 }

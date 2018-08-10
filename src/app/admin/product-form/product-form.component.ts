@@ -15,6 +15,7 @@ export class ProductFormComponent {
       
   categoryList: Category[];
   product: Product;
+  $key: string;
 
   productForm = new FormGroup({
     title: new FormControl('', Validators.required),
@@ -27,12 +28,17 @@ export class ProductFormComponent {
               private router: Router,
               private route: ActivatedRoute) { 
     this.categoryList = this.getCategories();
-    let $key = this.route.snapshot.paramMap.get('$key'); 
-    this.product = this.getProduct($key);      
+    this.$key = this.route.snapshot.paramMap.get('$key'); 
+    this.product = this.getProduct(this.$key);      
   }
 
   saveProduct(product){      
-    this.productService.createProduct(product);
+    if(null != this.$key) {      
+      this.productService.updateProduct(this.$key,product);
+    }else {      
+      this.productService.createProduct(product);
+    }
+
     this.router.navigate(['/admin/products']);
   }
 
