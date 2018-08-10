@@ -9,14 +9,23 @@ import { Product } from '../../models/product';
 })
 export class AdminProductsComponent {
 
-  productList: Product[];
+  productList: Product[];  
 
   constructor(private productService: ProductService) {
     this.productList =  this.getProductList();
   }
 
-  getProductList(){
-    return this.productService.getAllProducts();     
+  getProductList(){    
+    this.productList = [];
+    this.productService.getAllProducts().snapshotChanges().subscribe(products =>{        
+      products.forEach(product =>{
+        let jProduct = product.payload.toJSON();
+        jProduct['$key'] = product.key;
+        this.productList.push(jProduct as Product);
+      });
+    });
+    
+    return this.productList;     
   }
 
 }

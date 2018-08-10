@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ProductService } from '../../product.service';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { Category } from '../../models/category';
+import { Product } from '../../models/product';
 
 
 @Component({
@@ -12,34 +13,55 @@ import { Category } from '../../models/category';
 })
 export class ProductFormComponent {
       
-  categories = [
-    {catName: 'bread', catValue: 'Bread'},
-    {catName: 'dairy', catValue: 'Dairy'},
-    {catName: 'fruits', catValue: 'Fruits'},
-    {catName: 'seasonings', catValue: 'Seasonings and Spice'},
-    {catName: 'vegitables', catValue: 'Vegitables'},
-  ];
+  categoryList: Category[];
+  product: Product;
 
   productForm = new FormGroup({
     title: new FormControl('', Validators.required),
     price: new FormControl('', Validators.required),
     category: new FormControl('', Validators.required),
     imageUrl: new FormControl('', Validators.required)    
-  });
+  });  
 
-  categoryList: Category[];
-
-  constructor(private productService: ProductService, private router: Router) { 
-    this.categoryList = this.getCategories();    
+  constructor(private productService: ProductService, 
+              private router: Router,
+              private route: ActivatedRoute) { 
+    this.categoryList = this.getCategories();
+    let $key = this.route.snapshot.paramMap.get('$key'); 
+    this.product = this.getProduct($key);      
   }
 
-  saveProduct(product){  
+  saveProduct(product){      
     this.productService.createProduct(product);
     this.router.navigate(['/admin/products']);
   }
 
-  getCategories(){
-    return this.productService.getCategories();
+  getCategories(){   
+    this.categoryList = [];
+    this.productService.getCategories().snapshotChanges().subscribe(categories =>{
+      categories.forEach(category =>{              
+        let jCategory = category.payload.toJSON();          
+        jCategory['key'] = category.payload.key;                        
+        this.categoryList.push(jCategory as Category);
+      });
+    });
+    return this.categoryList;
+  }
+
+  getProduct($key){ 
+    this.product = <Product>{};     
+    this.productService.getProduct($key).snapshotChanges().subscribe(product =>{
+      let jProduct = product.payload.toJSON();  
+      if(null != jProduct){
+        this.product.$key = product.key;
+        this.product.title = jProduct['title'];
+        this.product.price = jProduct['price'];
+        this.product.category = jProduct['category'];
+        this.product.imageUrl = jProduct['imageUrl'];
+      }                 
+    }); 
+        
+    return this.product;  
   }
 
 }
