@@ -3,6 +3,8 @@ import { ProductService } from '../product.service';
 import { Product } from '../models/product';
 import { Subscription } from 'rxjs';
 import { Category } from '../models/category';
+import { ActivatedRoute } from '@angular/router';
+
 
 @Component({
   selector: 'app-products',
@@ -12,12 +14,15 @@ import { Category } from '../models/category';
 export class ProductsComponent implements OnDestroy {
 
   productList: Product[]; 
+  filteredProducts: Product[];
   subscription: Subscription; 
   categoryList: Category[];
+  category: string;ActivatedRoute
   
-  constructor(private productService: ProductService) { 
+  constructor(private productService: ProductService, private route: ActivatedRoute) { 
     this.productList =  this.getProductList(); 
-    this.categoryList = this.getCategories();   
+    this.categoryList = this.getCategories();
+    this.getParams();   
   }
 
   getProductList(){    
@@ -43,6 +48,17 @@ export class ProductsComponent implements OnDestroy {
       });
     });
     return this.categoryList;
+  }
+
+  getParams(){
+    this.filteredProducts = [];
+    this.subscription = this.route.queryParamMap.subscribe(params =>{
+      this.category = params.get('category');
+      
+      this.filteredProducts = (this.category) 
+      ? this.productList.filter(product => product.category == this.category) 
+      : this.productList;
+    });    
   }
 
   ngOnDestroy(): void {
