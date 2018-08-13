@@ -1,6 +1,11 @@
 <p>
     <a routerLink="/admin/products/new/" class="btn btn-primary">New Product</a>
 </p>
+<p>
+    <input 
+        #query (keyup)="filter(query.value)" 
+        type="text" class="form-control" placeholder="Search...">
+</p>
 
 <table class="table">
     <thead class="thead-light">
@@ -12,10 +17,10 @@
         </tr>
     </thead>
     <tbody> 
-        <tr *ngFor="let p of productList; index as i">    
+        <tr *ngFor="let p of filteredProducts; index as i">    
             <th scope="row">{{i + 1}}</th>
             <td>{{p.title}}</td>
-            <td>{{p.price}}</td>
+            <td>{{p.price | currency: 'USD': true}}</td>
             <td><a routerLink="/admin/products/{{p.$key}}">Edit</a></td>
         </tr>          
     </tbody>
