@@ -12,10 +12,10 @@ export class AdminProductsComponent implements OnDestroy{
  
   productList: Product[]; 
   filteredProducts: Product[];
-  subscription: Subscription; 
+  subscription: Subscription;   
   
   constructor(private productService: ProductService) {
-    this.filteredProducts = this.productList =  this.getProductList();    
+    this.filteredProducts = this.productList =  this.getProductList();      
   }
 
   getProductList(){    
