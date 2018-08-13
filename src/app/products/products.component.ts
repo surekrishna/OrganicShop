@@ -4,7 +4,7 @@ import { Product } from '../models/product';
 import { Subscription } from 'rxjs';
 import { Category } from '../models/category';
 import { ActivatedRoute } from '@angular/router';
-
+import { switchMap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-products',
@@ -21,17 +21,25 @@ export class ProductsComponent implements OnDestroy {
   
   constructor(private productService: ProductService, private route: ActivatedRoute) { 
     this.productList =  this.getProductList(); 
-    this.categoryList = this.getCategories();
-    this.getParams();   
+    this.categoryList = this.getCategories();      
   }
 
   getProductList(){    
     this.productList = [];
+    this.filteredProducts = [];
     this.subscription = this.productService.getAllProducts().snapshotChanges().subscribe(products =>{        
       products.forEach(product =>{
         let jProduct = product.payload.toJSON();
         jProduct['$key'] = product.key;
-        this.productList.push(jProduct as Product);        
+        this.productList.push(jProduct as Product); 
+        
+        this.route.queryParamMap.subscribe(params =>{
+          this.category = params.get('category');
+          
+          this.filteredProducts = (this.category) 
+          ? this.productList.filter(product => product.category == this.category) 
+          : this.productList;
+        }); 
       });
     });
     
@@ -48,17 +56,6 @@ export class ProductsComponent implements OnDestroy {
       });
     });
     return this.categoryList;
-  }
-
-  getParams(){
-    this.filteredProducts = [];
-    this.subscription = this.route.queryParamMap.subscribe(params =>{
-      this.category = params.get('category');
-      
-      this.filteredProducts = (this.category) 
-      ? this.productList.filter(product => product.category == this.category) 
-      : this.productList;
-    });    
   }
 
   ngOnDestroy(): void {
