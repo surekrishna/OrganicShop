@@ -1,10 +1,9 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { ProductService } from '../product.service';
 import { Product } from '../models/product';
 import { Subscription } from 'rxjs';
-import { Category } from '../models/category';
 import { ActivatedRoute } from '@angular/router';
-import { switchMap } from 'rxjs/operators';
+
 
 @Component({
   selector: 'app-products',
@@ -15,13 +14,11 @@ export class ProductsComponent implements OnDestroy {
 
   productList: Product[]; 
   filteredProducts: Product[];
-  subscription: Subscription; 
-  categoryList: Category[];
-  category: string;ActivatedRoute
+  subscription: Subscription;   
+  category: string;
   
   constructor(private productService: ProductService, private route: ActivatedRoute) { 
-    this.productList =  this.getProductList(); 
-    this.categoryList = this.getCategories();      
+    this.productList =  this.getProductList();         
   }
 
   getProductList(){    
@@ -44,18 +41,6 @@ export class ProductsComponent implements OnDestroy {
     });
     
     return this.productList;     
-  }
-
-  getCategories(){   
-    this.categoryList = [];
-    this.subscription =  this.productService.getCategories().snapshotChanges().subscribe(categories =>{
-      categories.forEach(category =>{              
-        let jCategory = category.payload.toJSON();          
-        jCategory['key'] = category.payload.key;                        
-        this.categoryList.push(jCategory as Category);
-      });
-    });
-    return this.categoryList;
   }
 
   ngOnDestroy(): void {
