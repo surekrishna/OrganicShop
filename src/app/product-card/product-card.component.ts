@@ -1,6 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { Product } from '../models/product';
 import { ShoppingCartService } from '../shopping-cart.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'product-card',
@@ -11,18 +12,24 @@ export class ProductCardComponent {
 
   @Input('product') product: Product;
   @Input('show-actions') showActions = true;
+  subscription: Subscription;
 
   constructor(private cartService: ShoppingCartService) { }
 
-  addToCart(product: Product){
-    let cartId = localStorage.getItem('cartId');
-    if(!cartId){
-      this.cartService.createCart().then(result =>{        
-        localStorage.setItem('cartId', result.key);
-      });
-    }
+  addToCart(product: Product){        
+    let items$ = this.cartService.addToCart(product);
+    this.subscription = items$.snapshotChanges().subscribe(item =>{           
+      if(item.payload.exists()){
+        let qty = item.payload.toJSON();  
+        items$.update({quantity: +qty['quantity'] + 1});  
+        this.subscription.unsubscribe();      
+      } else{                
+        items$.set({ quantity: 1,
+          product:{title: product.title,price: product.price,category: product.category,imageUrl: product.imageUrl}
+        });
+        this.subscription.unsubscribe();
+      } 
+    });
   }
-
- 
 
 }
