@@ -1,8 +1,9 @@
-import { Component, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ProductService } from '../product.service';
 import { Product } from '../models/product';
 import { Subscription } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
+import { ShoppingCartService } from '../shopping-cart.service';
 
 
 @Component({
@@ -10,14 +11,17 @@ import { ActivatedRoute } from '@angular/router';
   templateUrl: './products.component.html',
   styleUrls: ['./products.component.css']
 })
-export class ProductsComponent implements OnDestroy {
+export class ProductsComponent implements OnInit, OnDestroy {
 
   productList: Product[]; 
   filteredProducts: Product[];
   subscription: Subscription;   
   category: string;
+  cart;
   
-  constructor(private productService: ProductService, private route: ActivatedRoute) { 
+  constructor(private productService: ProductService, 
+              private route: ActivatedRoute,
+              private cartService: ShoppingCartService) { 
     this.productList =  this.getProductList();         
   }
 
@@ -41,6 +45,12 @@ export class ProductsComponent implements OnDestroy {
     });
     
     return this.productList;     
+  }
+
+  ngOnInit(){
+    this.subscription = this.cartService.getCart().snapshotChanges().subscribe(cart =>{
+        this.cart = cart;        
+    });
   }
 
   ngOnDestroy(): void {

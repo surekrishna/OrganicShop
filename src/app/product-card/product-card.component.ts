@@ -12,6 +12,7 @@ export class ProductCardComponent {
 
   @Input('product') product: Product;
   @Input('show-actions') showActions = true;
+  @Input('shopping-cart') shoppingCart;  
   subscription: Subscription;
 
   constructor(private cartService: ShoppingCartService) { }
@@ -30,6 +31,13 @@ export class ProductCardComponent {
         this.subscription.unsubscribe();
       } 
     });
+  }
+
+  getQuantity(){       
+    if(!this.shoppingCart) return 0;
+    
+    let item = this.shoppingCart.payload.toJSON().items[this.product.$key];    
+    return item ? item.quantity : 0;
   }
 
 }

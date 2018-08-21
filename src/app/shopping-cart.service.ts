@@ -16,8 +16,9 @@ export class ShoppingCartService {
     });
   }
 
-  private getCart(cartId: string){
-    this.db.object('/shopping-carts/'+cartId);
+  getCart(){
+    let cartId = this.getOrCreateCartId();
+    return this.db.object('/shopping-carts/'+cartId);
   }
 
   private getOrCreateCartId(){
