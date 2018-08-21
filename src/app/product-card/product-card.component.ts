@@ -17,12 +17,27 @@ export class ProductCardComponent {
 
   constructor(private cartService: ShoppingCartService) { }
 
-  addToCart(product: Product){        
+  addToCart(){        
+    this.updateItemQuantity(this.product,1);
+  }
+
+  removeFromCart(){
+    this.updateItemQuantity(this.product,-1);
+  }
+
+  getQuantity(){       
+    if(!this.shoppingCart) return 0;
+    
+    let item = this.shoppingCart.payload.toJSON().items[this.product.$key];    
+    return item ? item.quantity : 0;
+  }
+
+  updateItemQuantity(product: Product, change: number){
     let items$ = this.cartService.addToCart(product);
     this.subscription = items$.snapshotChanges().subscribe(item =>{           
       if(item.payload.exists()){
         let qty = item.payload.toJSON();  
-        items$.update({quantity: +qty['quantity'] + 1});  
+        items$.update({quantity: +qty['quantity'] + change});  
         this.subscription.unsubscribe();      
       } else{                
         items$.set({ quantity: 1,
@@ -31,13 +46,6 @@ export class ProductCardComponent {
         this.subscription.unsubscribe();
       } 
     });
-  }
-
-  getQuantity(){       
-    if(!this.shoppingCart) return 0;
-    
-    let item = this.shoppingCart.payload.toJSON().items[this.product.$key];    
-    return item ? item.quantity : 0;
   }
 
 }
