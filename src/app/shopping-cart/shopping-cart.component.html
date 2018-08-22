@@ -9,6 +9,7 @@
         <th scope="col">S.N0</th>
         <th scope="col">Product</th>
         <th scope="col">Quantity</th>
+        <th scope="col">Price</th>
       </tr>
     </thead>
     <tbody>      
@@ -16,8 +17,17 @@
         <th scope="row">{{ i+1 }}</th>
         <td>{{cartItems[pId].product.category | json}}</td>
         <td>{{cartItems[pId].quantity | json}}</td>
+        <td>{{cartItems[pId].product.price * cartItems[pId].quantity | currency: 'USD': 'symbol' | json}}</td>
       </tr>
     </tbody>
+    <tfoot>
+      <tr>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>{{ totalAmount | currency: 'USD': 'symbol' }}</td>
+      </tr>
+    </tfoot>
   </table>
 </ng-container>
 

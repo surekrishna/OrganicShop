@@ -12,18 +12,23 @@ export class ShoppingCartComponent implements OnInit {
   
   cartItems;
   productIds = [];
-  shoppingCartItemCount: number;  
+  shoppingCartItemCount: number; 
+  totalAmount: number; 
 
   constructor(private cartService: ShoppingCartService) { }
 
   ngOnInit() {        
-    this.cartService.getCart().snapshotChanges().subscribe(cart =>{      
+    this.cartService.getCart().snapshotChanges().subscribe(cart =>{  
+      this.totalAmount = 0;    
       this.shoppingCartItemCount = 0;  
       let carts = cart.payload.toJSON() as ShoppingCart;
       this.cartItems = carts.items;         
       for(let productId in this.cartItems){
-        this.productIds.push(productId);                            
-        this.shoppingCartItemCount += this.cartItems[productId].quantity;          
+        this.productIds.push(productId);
+        let price = this.cartItems[productId].product.price;
+        let quantity = this.cartItems[productId].quantity;              
+        this.totalAmount += +price*quantity;                                  
+        this.shoppingCartItemCount += quantity;          
       }             
     });
   }
