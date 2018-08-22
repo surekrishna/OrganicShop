@@ -17,10 +17,17 @@ export class ShoppingCartComponent implements OnInit {
 
   constructor(private cartService: ShoppingCartService) { }
 
-  ngOnInit() {        
+  clearCart(){
+    this.cartService.clearCart();
+  }
+
+  getCart(){
     this.cartService.getCart().snapshotChanges().subscribe(cart =>{  
       this.totalAmount = 0;    
-      this.shoppingCartItemCount = 0;  
+      this.shoppingCartItemCount = 0; 
+      
+      if(null === cart.key) return 0;
+
       let carts = cart.payload.toJSON() as ShoppingCart;
       this.cartItems = carts.items;         
       for(let productId in this.cartItems){
@@ -31,6 +38,10 @@ export class ShoppingCartComponent implements OnInit {
         this.shoppingCartItemCount += quantity;          
       }             
     });
+  }
+
+  ngOnInit() {        
+   this.getCart();
   }
 
 }

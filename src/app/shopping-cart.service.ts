@@ -16,12 +16,17 @@ export class ShoppingCartService {
     });
   }
 
+  addToCart(product: Product){
+    let cartId = this.getOrCreateCartId();
+    return this.db.object('/shopping-carts/'+cartId+'/items/'+product.$key);
+  }
+
   getCart(){
     let cartId = this.getOrCreateCartId();
     return this.db.object('/shopping-carts/'+cartId);
   }
 
-  private getOrCreateCartId(){
+  getOrCreateCartId(){
     let cartId = localStorage.getItem('cartId');
     if(cartId) return cartId;
     
@@ -30,10 +35,9 @@ export class ShoppingCartService {
     return result.key;
   }
 
-  addToCart(product: Product){
+  clearCart(){
     let cartId = this.getOrCreateCartId();
-    return this.db.object('/shopping-carts/'+cartId+'/items/'+product.$key);
+    this.db.object('/shopping-carts/'+cartId+'/items/').remove();
   }
-  
 
 }
