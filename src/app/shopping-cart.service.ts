@@ -40,4 +40,9 @@ export class ShoppingCartService {
     this.db.object('/shopping-carts/'+cartId+'/items/').remove();
   }
 
+  removeItem(productId: string){
+    let cartId = this.getOrCreateCartId();
+    this.db.object('/shopping-carts/'+cartId+'/items/'+productId).remove();
+  }
+
 }

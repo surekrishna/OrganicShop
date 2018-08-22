@@ -14,6 +14,7 @@ export class ShoppingCartComponent implements OnInit {
   productIds = [];
   shoppingCartItemCount: number; 
   totalAmount: number; 
+  
 
   constructor(private cartService: ShoppingCartService) { }
 
@@ -34,7 +35,10 @@ export class ShoppingCartComponent implements OnInit {
       for(let productId in this.cartItems){
         this.productIds.push(productId);
         let price = this.cartItems[productId].product.price;
-        let quantity = this.cartItems[productId].quantity;              
+        let quantity = this.cartItems[productId].quantity; 
+
+        if(quantity === 0) this.cartService.removeItem(productId);
+
         this.totalAmount += +price*quantity;                                  
         this.shoppingCartItemCount += quantity;          
       }             
