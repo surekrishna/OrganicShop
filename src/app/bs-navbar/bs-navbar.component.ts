@@ -27,9 +27,9 @@ export class BsNavbarComponent implements OnInit {
             
     this.cartService.getCart().snapshotChanges().subscribe(cart =>{      
       this.shoppingCartItemCount = 0;  
-
-      if(null === cart.key) return 0;
       
+      if(null === cart.key) return 0;
+
       let cartItems = cart.payload.toJSON() as ShoppingCart;      
       for(let productID in cartItems.items){        
         this.shoppingCartItemCount += cartItems.items[productID].quantity;          

@@ -24,7 +24,8 @@ export class ShoppingCartComponent implements OnInit {
   getCart(){
     this.cartService.getCart().snapshotChanges().subscribe(cart =>{  
       this.totalAmount = 0;    
-      this.shoppingCartItemCount = 0; 
+      this.shoppingCartItemCount = 0;
+      this.cartItems = null; 
       
       if(null === cart.key) return 0;
 

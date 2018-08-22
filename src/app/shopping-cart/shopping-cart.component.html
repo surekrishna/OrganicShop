@@ -1,5 +1,5 @@
 <h1>Shopping Cart</h1>
-<ng-container *ngIf="cartItems">
+<ng-container *ngIf="cartItems; else zeroCart">
   <p>
     You have {{ shoppingCartItemCount }} number of cart items in your cart.
   </p>
@@ -35,4 +35,8 @@
       (click)="clearCart()"
       class="btn btn-danger btn-sm">Clear Shopping Cart</button>
 </ng-container>
-
+<ng-template #zeroCart>
+  <p>
+    You have {{ shoppingCartItemCount }} number of cart items in your cart.
+  </p>
+</ng-template>
