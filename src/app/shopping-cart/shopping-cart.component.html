@@ -7,6 +7,7 @@
     <thead class="thead-light">
       <tr>
         <th scope="col">S.N0</th>
+        <th></th>
         <th scope="col">Product</th>
         <th scope="col">Quantity</th>
         <th scope="col">Price</th>
@@ -15,6 +16,7 @@
     <tbody>      
       <tr *ngFor="let pId of productIds; index as i">
         <th scope="row">{{ i+1 }}</th>
+        <td><div [style.backgroundImage]="'url('+ cartItems[pId].product.imageUrl +')'" class="thumbnail"></div></td>
         <td>{{cartItems[pId].product.title | json}}</td>
         <td>{{cartItems[pId].quantity | json}}</td>
         <!-- below code is implementation of shopping cart adding and removing items -->
@@ -24,6 +26,7 @@
     </tbody>
     <tfoot>
       <tr>
+        <td></td>
         <td></td>
         <td></td>
         <td></td>
