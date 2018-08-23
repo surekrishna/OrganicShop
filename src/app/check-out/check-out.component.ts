@@ -7,6 +7,7 @@ import { OrderService } from '../order.service';
 import { Order } from '../models/order';
 import { AuthService } from '../auth.service';
 import { FinalOrder } from '../models/finalorder';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-check-out',
@@ -30,6 +31,7 @@ export class CheckOutComponent implements OnInit, OnDestroy {
   });
 
   constructor(
+          private router: Router,
           private authService: AuthService,
           private cartService: ShoppingCartService,
           private orderService: OrderService) { }
@@ -49,7 +51,8 @@ export class CheckOutComponent implements OnInit, OnDestroy {
 
   saveOrder(checkOutForm){
     let finalOrder = new FinalOrder(this.userId,checkOutForm,this.getItems());       
-    this.orderService.saveOrder(finalOrder);    
+    let result = this.orderService.saveOrder(finalOrder);    
+    this.router.navigate(['/order-success',result.key]);
   }
 
   getItems(){
