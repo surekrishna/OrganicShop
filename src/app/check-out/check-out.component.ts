@@ -6,6 +6,7 @@ import { ShoppingCart } from '../models/shopping-cart';
 import { OrderService } from '../order.service';
 import { Order } from '../models/order';
 import { AuthService } from '../auth.service';
+import { FinalOrder } from '../models/finalorder';
 
 @Component({
   selector: 'app-check-out',
@@ -47,13 +48,8 @@ export class CheckOutComponent implements OnInit, OnDestroy {
   }
 
   saveOrder(checkOutForm){
-    let order = {
-      userId: this.userId,
-      dateOrdered: new Date().getTime(),
-      shipping: checkOutForm,
-      items: this.getItems(),
-    };    
-    this.orderService.saveOrder(order);    
+    let finalOrder = new FinalOrder(this.userId,checkOutForm,this.getItems());       
+    this.orderService.saveOrder(finalOrder);    
   }
 
   getItems(){
