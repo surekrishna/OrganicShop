@@ -5,6 +5,7 @@ import { ShoppingCartService } from '../shopping-cart.service';
 import { ShoppingCart } from '../models/shopping-cart';
 import { OrderService } from '../order.service';
 import { Order } from '../models/order';
+import { AuthService } from '../auth.service';
 
 @Component({
   selector: 'app-check-out',
@@ -17,6 +18,7 @@ export class CheckOutComponent implements OnInit, OnDestroy {
   cart: ShoppingCart;  
   totalAmount: number; 
   orderItems: Order[];
+  userId: string;
 
   checkOutForm = new FormGroup({
     name: new FormControl('', Validators.required),
@@ -27,6 +29,7 @@ export class CheckOutComponent implements OnInit, OnDestroy {
   });
 
   constructor(
+          private authService: AuthService,
           private cartService: ShoppingCartService,
           private orderService: OrderService) { }
 
@@ -34,6 +37,9 @@ export class CheckOutComponent implements OnInit, OnDestroy {
     this.subscription = this.cartService.getCart().snapshotChanges().subscribe(cart => {
       this.cart = cart.payload.toJSON() as ShoppingCart;
     });
+    this.subscription = this.authService.user$.subscribe(user =>{
+      this.userId = user.uid;
+    })
   }
 
   ngOnDestroy(){
@@ -42,6 +48,7 @@ export class CheckOutComponent implements OnInit, OnDestroy {
 
   saveOrder(checkOutForm){
     let order = {
+      userId: this.userId,
       dateOrdered: new Date().getTime(),
       shipping: checkOutForm,
       items: this.getItems(),
