@@ -2,6 +2,9 @@
 <ng-container *ngIf="cartItems; else zeroCart">
   <p>
     You have {{ shoppingCartItemCount }} number of cart items in your cart.
+    <button 
+      (click)="clearCart()"
+      class="btn btn-light btn-sm">Clear Shopping Cart</button>
   </p>
   <table class="table">
     <thead class="thead-light">
@@ -33,10 +36,8 @@
         <td>{{ totalAmount | currency: 'USD': 'symbol' }}</td>
       </tr>
     </tfoot>
-  </table>
-  <button 
-      (click)="clearCart()"
-      class="btn btn-danger btn-sm">Clear Shopping Cart</button>
+  </table> 
+  <a routerLink="/check-out" class="btn btn-primary">Check Out</a> 
 </ng-container>
 <ng-template #zeroCart>
   <p>

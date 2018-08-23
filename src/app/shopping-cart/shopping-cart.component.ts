@@ -18,6 +18,10 @@ export class ShoppingCartComponent implements OnInit {
 
   constructor(private cartService: ShoppingCartService) { }
 
+  ngOnInit() {        
+    this.getCart();
+   }
+
   clearCart(){
     this.cartService.clearCart();
   }
@@ -44,9 +48,5 @@ export class ShoppingCartComponent implements OnInit {
       }             
     });
   }
-
-  ngOnInit() {        
-   this.getCart();
-  }
-
+  
 }

@@ -22,7 +22,7 @@ export class ProductCardComponent {
   }
 
   getQuantity(){    
-    if(!this.shoppingCart || !this.shoppingCart.items || null === this.shoppingCart.key) return 0;    
+    if(!this.shoppingCart || null === this.shoppingCart.key) return 0;    
     
     let item = this.shoppingCart.payload.toJSON().items[this.product.$key];   
     return item ? item.quantity : 0;
