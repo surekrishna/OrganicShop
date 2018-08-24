@@ -31,6 +31,7 @@ import { ProductFilterComponent } from './products/product-filter/product-filter
 import { ProductCardComponent } from './product-card/product-card.component';
 import { ProductQuantityComponent } from './product-quantity/product-quantity.component';
 import { OrderService } from './order.service';
+import { ShippingCartSummaryComponent } from './shipping-cart-summary/shipping-cart-summary.component';
 
 
 @NgModule({
@@ -49,7 +50,8 @@ import { OrderService } from './order.service';
     ProductFormComponent,
     ProductFilterComponent,
     ProductCardComponent,
-    ProductQuantityComponent
+    ProductQuantityComponent,
+    ShippingCartSummaryComponent
   ],
   imports: [  
     FormsModule,
