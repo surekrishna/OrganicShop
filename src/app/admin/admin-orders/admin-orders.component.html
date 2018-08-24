@@ -1,3 +1,18 @@
-<p>
-  admin-orders works!
-</p>
+<table class="table">
+    <thead>
+      <tr class="table-info">
+        <th scope="col">S.NO</th>
+        <th scope="col">Name</th>
+        <th scope="col">Date</th>
+        <th scope="col">User ID</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let order of ordersList;index as i">
+        <th scope="row">{{ i+1 }}</th>
+        <td>{{ order.shipping.name }}</td>
+        <td>{{ order.datePlaced | date: 'MM/dd/yyyy' }}</td>
+        <td>{{ order.userId }}</td>
+      </tr>            
+    </tbody>
+  </table>
