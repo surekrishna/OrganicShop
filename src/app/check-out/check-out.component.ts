@@ -20,7 +20,9 @@ export class CheckOutComponent implements OnInit, OnDestroy {
   cart: ShoppingCart;  
   totalAmount: number; 
   orderItems: Order[];
-  userId: string;
+  userId: string;    
+  tPrice: number;
+  tQuantity: number;
 
   checkOutForm = new FormGroup({
     name: new FormControl('', Validators.required),
@@ -36,13 +38,14 @@ export class CheckOutComponent implements OnInit, OnDestroy {
           private cartService: ShoppingCartService,
           private orderService: OrderService) { }
 
-  ngOnInit() {
+  ngOnInit() {    
     this.subscription = this.cartService.getCart().snapshotChanges().subscribe(cart => {
-      this.cart = cart.payload.toJSON() as ShoppingCart;
+      this.cart = cart.payload.toJSON() as ShoppingCart;  
+      this.getItems();
     });
     this.subscription = this.authService.user$.subscribe(user =>{
       this.userId = user.uid;
-    })
+    }) 
   }
 
   ngOnDestroy(){
@@ -56,6 +59,8 @@ export class CheckOutComponent implements OnInit, OnDestroy {
   }
 
   getItems(){
+    this.tQuantity = 0;
+    this.tPrice = 0;
     this.totalAmount = 0;
     this.orderItems = [];
     let cartItems = this.cart.items;
@@ -70,6 +75,8 @@ export class CheckOutComponent implements OnInit, OnDestroy {
       product['price'] = price; 
       product['quantity'] = quantity
       product['totalAmount'] = price*quantity;
+      this.tPrice += price*quantity;
+      this.tQuantity += quantity;
 
       this.orderItems.push(product as Order);            
     }     
