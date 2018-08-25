@@ -1,3 +1,52 @@
-<p>
-  check-out works!
-</p>
+<div class="row">
+  <div class="col-6">
+    <form [formGroup]="checkOutForm" (ngSubmit)="saveOrder(checkOutForm.value)">
+      <div class="form-group">
+        <label for="name">Name</label>
+        <input type="text" formControlName="name" class="form-control" id="name" placeholder="name">          
+      </div>
+      <div class="form-group">
+        <label for="address">Address</label>
+        <input type="text" formControlName="addressLine1" class="form-control" id="addressLine1" placeholder="Line 1">          
+      </div>
+      <div class="form-group">           
+        <input type="text" formControlName="addressLine2" class="form-control" id="addressLine2" placeholder="Line 2">
+      </div>
+      <div class="form-group">
+        <label for="zipcode">ZipCode</label>
+        <input type="text" formControlName="zipCode" class="form-control" id="zipCode" placeholder="zipCode">          
+      </div>
+      <div class="form-group">
+        <label for="city">City</label>
+        <input type="text" formControlName="city" class="form-control" id="city" placeholder="city">          
+        </div>
+      <button class="btn btn-primary">Place Order</button>
+    </form>
+  </div>
+  <div class="col-6">
+    <div class="card">
+      <div class="card-header">
+          <h5 class="card-title">Order Summary</h5>
+      </div>
+      <div class="card-body">
+        <h5>You have {{ tQuantity }} items in your cart.</h5>        
+        <ul class="list-group list-group-flush">                                 
+          <li *ngFor="let item of orderItems" class="list-group-item">
+            {{ item.quantity }} x {{ item.title }}
+            <div class="float-right">
+                {{item.totalAmount | currency: 'USD': 'symbol'}}
+            </div>            
+          </li>
+          <li class="list-group-item font-weight-bold">
+            Total
+            <div class="float-right">
+                {{ tPrice | currency: 'USD': 'symbol'}}
+            </div>     
+          </li>           
+        </ul>        
+      </div>
+    </div>
+  </div>
+</div>
+
+

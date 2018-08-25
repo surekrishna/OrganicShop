@@ -1,3 +1,46 @@
-<p>
-  shopping-cart works!
-</p>
+<h1>Shopping Cart</h1>
+<ng-container *ngIf="cartItems; else zeroCart">
+  <p>
+    You have {{ shoppingCartItemCount }} number of cart items in your cart.
+    <button 
+      (click)="clearCart()"
+      class="btn btn-light btn-sm">Clear Shopping Cart</button>
+  </p>
+  <table class="table">
+    <thead class="thead-light">
+      <tr>
+        <th scope="col">S.N0</th>
+        <th></th>
+        <th scope="col">Product</th>
+        <th scope="col">Quantity</th>
+        <th scope="col">Price</th>
+      </tr>
+    </thead>
+    <tbody>      
+      <tr *ngFor="let pId of productIds; index as i">
+        <th scope="row">{{ i+1 }}</th>
+        <td><div [style.backgroundImage]="'url('+ cartItems[pId].product.imageUrl +')'" class="thumbnail"></div></td>
+        <td>{{cartItems[pId].product.title | json}}</td>
+        <td>{{cartItems[pId].quantity | json}}</td>
+        <!-- below code is implementation of shopping cart adding and removing items -->
+        <!-- <td><product-quantity [product]="cartItems[pId].product" [shopping-cart]="cartItems"></product-quantity></td> -->
+        <td>{{cartItems[pId].product.price * cartItems[pId].quantity | currency: 'USD': 'symbol' | json}}</td>
+      </tr>
+    </tbody>
+    <tfoot>
+      <tr>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>{{ totalAmount | currency: 'USD': 'symbol' }}</td>
+      </tr>
+    </tfoot>
+  </table> 
+  <a routerLink="/check-out" class="btn btn-primary">Check Out</a> 
+</ng-container>
+<ng-template #zeroCart>
+  <p>
+    You have {{ shoppingCartItemCount }} number of cart items in your cart.
+  </p>
+</ng-template>
