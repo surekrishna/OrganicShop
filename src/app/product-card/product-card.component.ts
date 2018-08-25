@@ -21,8 +21,9 @@ export class ProductCardComponent {
     this.updateItemQuantity(this.product,1);
   }
 
-  getQuantity(){    
-    if(!this.shoppingCart || null === this.shoppingCart.key) return 0;    
+  getQuantity(){  
+    //if(!this.shoppingCart || null === this.shoppingCart.key) return 0;      
+    if(!this.shoppingCart || null === this.shoppingCart.key || !this.shoppingCart.payload.toJSON().items) return 0;    
     
     let item = this.shoppingCart.payload.toJSON().items[this.product.$key];   
     return item ? item.quantity : 0;
