@@ -60,3 +60,6 @@ this ngbootstrap is required for dropdown and others
 	firebase deploy
 	Hosting URL: https://organicshop10.firebaseapp.com
 
+#Extensions added to VS Code
+move TS - extension for moving typescript files and folders and updating relative imports in your workspace
+TypeScript Hero - sort and organize your imports (sort and remove unused imports)
