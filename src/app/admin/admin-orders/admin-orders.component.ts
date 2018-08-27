@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { OrderService } from '../../order.service';
-import { FinalOrder } from '../../models/finalorder';
-import { Order } from '../../models/order';
+import { OrderService } from 'shared/services/order.service';
+import { FinalOrder } from 'shared/models/finalorder';
+import { Order } from 'shared/models/order';
 import { Subscription } from 'rxjs';
 
 @Component({

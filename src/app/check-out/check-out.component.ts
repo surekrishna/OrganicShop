@@ -1,12 +1,12 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
-import { ShoppingCartService } from '../shopping-cart.service';
-import { ShoppingCart } from '../models/shopping-cart';
-import { OrderService } from '../order.service';
-import { Order } from '../models/order';
-import { AuthService } from '../auth.service';
-import { FinalOrder } from '../models/finalorder';
+import { ShoppingCartService } from 'shared/services/shopping-cart.service';
+import { ShoppingCart } from 'shared/models/shopping-cart';
+import { OrderService } from 'shared/services/order.service';
+import { Order } from 'shared/models/order';
+import { AuthService } from 'shared/services/auth.service';
+import { FinalOrder } from 'shared/models/finalorder';
 import { Router } from '@angular/router';
 
 @Component({

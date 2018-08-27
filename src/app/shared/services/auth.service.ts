@@ -4,8 +4,8 @@ import * as firebase from 'firebase';
 import { Observable, of } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
 import { switchMap } from 'rxjs/operators';
-import { UserService } from './user.service';
-import { AppUser } from './models/app-user';
+import { UserService } from 'shared/services/user.service';
+import { AppUser } from 'shared/models/app-user';
 
 @Injectable({
   providedIn: 'root'

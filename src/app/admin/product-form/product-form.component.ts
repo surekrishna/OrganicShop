@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { ProductService } from '../../product.service';
+import { ProductService } from 'shared/services/product.service';
 import { Router, ActivatedRoute } from '@angular/router';
-import { Category } from '../../models/category';
-import { Product } from '../../models/product';
+import { Category } from 'shared/models/category';
+import { Product } from 'shared/models/product';
 
 
 @Component({

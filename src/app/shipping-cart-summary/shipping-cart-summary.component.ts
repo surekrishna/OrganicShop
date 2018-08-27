@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { Order } from '../models/order';
+import { Order } from 'shared/models/order';
 
 @Component({
   selector: 'shipping-cart-summary',

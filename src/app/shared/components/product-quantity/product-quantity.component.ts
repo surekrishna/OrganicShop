@@ -1,17 +1,16 @@
 import { Component, Input } from '@angular/core';
-import { Product } from '../models/product';
-import { ShoppingCartService } from '../shopping-cart.service';
+import { Product } from 'shared/models/product';
 import { Subscription } from 'rxjs';
+import { ShoppingCartService } from 'shared/services/shopping-cart.service';
 
 @Component({
-  selector: 'product-card',
-  templateUrl: './product-card.component.html',
-  styleUrls: ['./product-card.component.css']
+  selector: 'product-quantity',
+  templateUrl: './product-quantity.component.html',
+  styleUrls: ['./product-quantity.component.css']
 })
-export class ProductCardComponent {
+export class ProductQuantityComponent {
 
-  @Input('product') product: Product;
-  @Input('show-actions') showActions = true;
+  @Input('product') product: Product;  
   @Input('shopping-cart') shoppingCart;  
   subscription: Subscription;
 
@@ -21,11 +20,14 @@ export class ProductCardComponent {
     this.updateItemQuantity(this.product,1);
   }
 
-  getQuantity(){  
-    //if(!this.shoppingCart || null === this.shoppingCart.key) return 0;      
-    if(!this.shoppingCart || null === this.shoppingCart.key || !this.shoppingCart.payload.toJSON().items) return 0;    
+  removeFromCart(){
+    this.updateItemQuantity(this.product,-1);
+  }
+
+  getQuantity(){       
+    if(!this.shoppingCart) return 0;
     
-    let item = this.shoppingCart.payload.toJSON().items[this.product.$key];   
+    let item = this.shoppingCart.payload.toJSON().items[this.product.$key];    
     return item ? item.quantity : 0;
   }
 
