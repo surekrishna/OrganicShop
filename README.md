@@ -59,6 +59,7 @@ this ngbootstrap is required for dropdown and others
 	ng build --prod
 	firebase deploy
 	Hosting URL: https://organicshop10.firebaseapp.com
+11. Installed font-awesome :: https://www.npmjs.com/package/angular-font-awesome 
 
 #Extensions added to VS Code
 move TS - extension for moving typescript files and folders and updating relative imports in your workspace
