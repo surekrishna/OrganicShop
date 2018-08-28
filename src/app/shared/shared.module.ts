@@ -12,10 +12,13 @@ import { UserService } from 'shared/services/user.service';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { AngularFontAwesomeModule } from 'angular-font-awesome';
+
 
 @NgModule({
   imports: [
     CommonModule,
+    AngularFontAwesomeModule,
     NgbModule.forRoot(),    
     BrowserModule,
     BrowserAnimationsModule, 
@@ -37,7 +40,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     ReactiveFormsModule,
     BrowserModule,
     BrowserAnimationsModule,
-    NgbModule,    
+    NgbModule.forRoot().ngModule,    
+    AngularFontAwesomeModule
   ],
   providers: [
     AuthService,
